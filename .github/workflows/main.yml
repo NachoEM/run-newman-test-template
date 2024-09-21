@@ -1,10 +1,9 @@
 name: Automated API tests using Postman CLI and Newman
 
 on: 
-  workflow_dispatch: {}  # Para ejecutar manualmente
-  push:
-    branches:
-      - main
+  workflow_dispatch: {}  # For manual execution
+  schedule:
+    - cron: '0 0 * * 0'  # Executes every Sunday at midnight
 
 jobs:
   automated-api-tests:
@@ -36,6 +35,7 @@ jobs:
 
       - name: Run API tests with Newman and generate HTML report
         run: |
+          mkdir -p newman  # Create the newman directory if it doesn't exist
           newman run collection.json -e environment.json --reporters cli,html --reporter-html-export ./newman/report.html
 
       - name: Configure Git for deployment
@@ -49,7 +49,7 @@ jobs:
           git clone https://github.com/${{ github.repository }}.git
           cd $(basename $_ .git)
           git checkout -B gh-pages
-          cp -r ../newman/* .
+          cp -r ../newman/* .  # Ensure that newman files are copied
           git add .
           git commit -m "Update Postman test report"
           git push https://${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}.git gh-pages
