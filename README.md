@@ -4,10 +4,10 @@ This repository contains automated tests for for the JIRA API using Postman CLI.
 
 ### Test Results
 
-The latest test results can be found in the latest GitHub Actions run. Click the badge above to view the most recent execution and download the HTML report from the "Artifacts" section.
+The latest test results can be found in the latest GitHub Actions run. Click the link above to view the most recent execution and download the HTML report from the "Artifacts" section.
 
 
-[![Latest Run](https://github.com/bootcamp-qa/postman-run/actions/workflows/postman-tests.yml/badge.svg)](https://github.com/bootcamp-qa/postman-run/actions)
+[![Latest Run](https://github.com/bootcamp-qa/postman-run/actions)
 
 
 ### Test Scenarios
