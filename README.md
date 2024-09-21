@@ -31,31 +31,22 @@ The tests verify both positive scenarios and error handling, including:
 
 To run the tests locally using Postman, follow these steps:
 
-1. **Set Up JIRA**:
-   - Make sure you have a JIRA account and create a ticket with at least one comment.
+1. **Import the Postman Collection**:
+   - Download the Postman collection from the latest GitHub Actions run artifacts.
+   - Open Postman and go to **File > Import**.
+   - Select the downloaded `collection.json` file and import it.
+   
 
 2. **Create Environment Variables**:
-   Create the following environment variables in Postman:
+  - Make sure you have a JIRA account and create a ticket with at least one comment.
    - **JIRA_URL**: Your JIRA instance URL (e.g., `https://your-jira-instance.atlassian.net`).
    - **JIRA_ISSUEID**: The ID of the JIRA ticket you created.
    - **JIRA_COMMENTID**: The ID of the comment you added to the JIRA ticket.
    - **USER**: Your JIRA username (email).
    - **TOKEN**: Your JIRA API token.
 
-   **To create an API token**:
-   - Go to your JIRA account.
-   - Click on your profile icon in the bottom left corner.
-   - Select **Account settings**.
-   - Navigate to **Security**.
-   - Scroll down to **API token** and click **Create and manage API tokens**.
-   - Click **Create API token** and follow the prompts to generate a token.
 
-3. **Import the Postman Collection**:
-   - Download the Postman collection from the latest GitHub Actions run artifacts.
-   - Open Postman and go to **File > Import**.
-   - Select the downloaded `collection.json` file and import it.
-
-4. **Run the Collection**:
+3. **Run the Collection**:
    - In Postman, select the imported collection and click on the **Run** button to execute the tests.
 
 
