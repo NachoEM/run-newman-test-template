@@ -1,11 +1,8 @@
-name: Automated API tests using Postman CLI
+name: Automated API tests using Postman CLI and Newman
 
 on: 
-  # Evento para ejecutar el workflow manualmente desde la interfaz de GitHub
-  workflow_dispatch: {}
-
-  # También se ejecuta automáticamente cuando hay un push a la rama main
-  push: 
+  workflow_dispatch: {}  # Para ejecutar manualmente
+  push:
     branches:
       - main
 
@@ -21,15 +18,21 @@ jobs:
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
+      - name: Install Newman (Postman CLI doesn't support reporters)
+        run: |
+          npm install -g newman
+
       - name: Login to Postman CLI
         run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
 
-      - name: Run API tests and generate HTML report
+      - name: Download collection and environment files
         run: |
-          postman collection run "33801345-5d9e4cce-b45e-4bf9-ad98-d0ee4cc254fb" \
-          -e "33801345-b6d6599f-f9a8-418c-91b1-fe6e63a48a95" \
-          --reporters cli,html \
-          --reporter-html-export ./newman/report.html
+          postman collection get "33801345-5d9e4cce-b45e-4bf9-ad98-d0ee4cc254fb" --save collection.json
+          postman environment get "33801345-b6d6599f-f9a8-418c-91b1-fe6e63a48a95" --save environment.json
+
+      - name: Run API tests with Newman and generate HTML report
+        run: |
+          newman run collection.json -e environment.json --reporters cli,html --reporter-html-export ./newman/report.html
 
       - name: Configure Git for deployment
         run: |
