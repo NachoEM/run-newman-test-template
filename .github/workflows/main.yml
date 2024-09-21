@@ -1,0 +1,42 @@
+name: Automated API tests using Postman CLI
+
+on: 
+  push: 
+    branches:
+      - main
+
+jobs:
+  automated-api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+
+      - name: Run API tests and generate HTML report
+        run: |
+          postman collection run "33801345-5d9e4cce-b45e-4bf9-ad98-d0ee4cc254fb" \
+          -e "33801345-b6d6599f-f9a8-418c-91b1-fe6e63a48a95" \
+          --reporters cli,html \
+          --reporter-html-export ./newman/report.html
+
+      - name: Upload HTML test report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: postman-test-report
+          path: ./newman/report.html
+
+      - name: Deploy HTML report to GitHub Pages
+        if: always() 
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./newman
