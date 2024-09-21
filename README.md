@@ -3,21 +3,34 @@
 This repository contains automated tests for our API using Postman CLI. The tests are executed automatically with every push to the `main` branch.
 
 
-## Test Results
+# API Testing for JIRA
 
-The latest test results can be found at the following link:
+This project contains automated tests for the JIRA API, focusing on the functionality of comments. The tests cover the following operations:
 
-[![Test Report](https://img.shields.io/badge/test-report-success)](https://your-username.github.io/your-repository-name/report.html)
+- **GET**: Retrieve comments associated with a specific issue.
+- **POST**: Add new comments to an issue.
+- **PUT**: Update existing comments.
+- **DELETE**: Remove comments from an issue.
 
-Click [here](https://your-username.github.io/your-repository-name/report.html) to view the latest test report.
+### Test Cases
 
-## Configuration
+The tests verify both positive scenarios and error handling, including:
 
-Ensure that the following secrets are set in the repository:
+- **Positive Cases**: 
+  - Successfully retrieving, adding, updating, and deleting comments.
+  - Ensuring the correct response data format and content.
 
-- `POSTMAN_API_KEY`: Your Postman API Key.
+- **Error Handling**: 
+  - Testing responses for invalid inputs (e.g., malformed requests).
+  - Verifying appropriate error codes (e.g., 400 Bad Request, 404 Not Found) for non-existent resources.
 
-## How It Works
+- **Authentication**: 
+  - Validating authentication mechanisms and checking responses for unauthorized access (e.g., 401 Unauthorized).
 
-- Every push to the `main` branch triggers a GitHub Action that runs the API tests using Postman CLI.
-- Results are published as an HTML report and deployed to GitHub Pages.
+These tests ensure that the API behaves as expected and helps maintain the integrity of comment functionality within JIRA.
+
+### Test Results
+
+Latest test results can be viewed at the following URL: [Test Results](https://bootcamp-qa.github.io/postman-run/report.html).
+
+These tests are executed weekly to ensure ongoing reliability and functionality of the JIRA API.
