@@ -17,9 +17,10 @@ jobs:
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
-      - name: Install Newman
+      - name: Install Newman and HTML Reporter
         run: |
           npm install -g newman
+          npm install -g newman-reporter-html
 
       - name: Download Postman collection using Postman API
         run: |
@@ -37,8 +38,18 @@ jobs:
         run: |
           newman run collection.json -e environment.json --reporters cli,html --reporter-html-export report.html
 
-      - name: Upload HTML report as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: postman-report
-          path: report.html
+      - name: Configure Git for deployment
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+
+      - name: Deploy HTML report to GitHub Pages
+        if: success()
+        run: |
+          git clone https://github.com/${{ github.repository }}.git
+          cd $(basename $_ .git)
+          git checkout -B gh-pages
+          cp ../report.html .  # Copy the report to the root of the repository
+          git add report.html
+          git commit -m "Update Postman test report"
+          git push https://${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}.git gh-pages
