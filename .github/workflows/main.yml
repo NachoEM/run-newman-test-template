@@ -43,13 +43,9 @@ jobs:
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
 
-      - name: Deploy HTML report to GitHub Pages
-        if: success()
-        run: |
-          git clone https://github.com/${{ github.repository }}.git
-          cd $(basename $_ .git)
-          git checkout -B gh-pages
-          cp ../report.html .  # Copy the report to the root of the repository
-          git add report.html
-          git commit -m "Update Postman test report"
-          git push https://${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}.git gh-pages
+      - name: Upload HTML report as artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: postman-report
+          path: report.html
