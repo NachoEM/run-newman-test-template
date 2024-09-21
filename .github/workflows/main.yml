@@ -35,8 +35,7 @@ jobs:
 
       - name: Run API tests with Newman and generate HTML report
         run: |
-          mkdir -p newman  # Create the newman directory if it doesn't exist
-          newman run collection.json -e environment.json --reporters cli,html --reporter-html-export ./newman/report.html
+          newman run collection.json -e environment.json --reporters cli,html --reporter-html-export ./report.html
 
       - name: Configure Git for deployment
         run: |
@@ -49,7 +48,7 @@ jobs:
           git clone https://github.com/${{ github.repository }}.git
           cd $(basename $_ .git)
           git checkout -B gh-pages
-          cp -r ../newman/* .  # Ensure that newman files are copied
+          cp ./report.html .  # Copy the report to the root of the repository
           git add .
           git commit -m "Update Postman test report"
           git push https://${{ secrets.GITHUBTOKEN }}@github.com/${{ github.repository }}.git gh-pages
