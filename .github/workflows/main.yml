@@ -22,13 +22,17 @@ jobs:
         run: |
           npm install -g newman
 
-      - name: Login to Postman CLI
-        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
-
-      - name: Download collection and environment files
+      - name: Download Postman collection using Postman API
         run: |
-          postman collection get "33801345-5d9e4cce-b45e-4bf9-ad98-d0ee4cc254fb" --save collection.json
-          postman environment get "33801345-b6d6599f-f9a8-418c-91b1-fe6e63a48a95" --save environment.json
+          curl --location --request GET "https://api.getpostman.com/collections/33801345-5d9e4cce-b45e-4bf9-ad98-d0ee4cc254fb" \
+          --header "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}" \
+          --output collection.json
+
+      - name: Download Postman environment using Postman API
+        run: |
+          curl --location --request GET "https://api.getpostman.com/environments/33801345-b6d6599f-f9a8-418c-91b1-fe6e63a48a95" \
+          --header "X-Api-Key: ${{ secrets.POSTMAN_API_KEY }}" \
+          --output environment.json
 
       - name: Run API tests with Newman and generate HTML report
         run: |
