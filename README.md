@@ -39,11 +39,11 @@ To run the tests locally using Postman, follow these steps:
 
 2. **Create Environment Variables**:
   - Make sure you have a JIRA account and create a ticket with at least one comment.
-   - **JIRA_URL**: Your JIRA instance URL (e.g., `https://your-jira-instance.atlassian.net`).
-   - **JIRA_ISSUEID**: The ID of the JIRA ticket you created.
-   - **JIRA_COMMENTID**: The ID of the comment you added to the JIRA ticket.
-   - **USER**: Your JIRA username (email).
-   - **TOKEN**: Your JIRA API token.
+   - **JIRAURL**: Your JIRA instance URL (e.g., `https://your-jira-instance.atlassian.net`).
+   - **JIRAISSUE**: The ID of the JIRA ticket you created.
+   - **COMMENTID**: The ID of the comment you added to the JIRA ticket.
+   - **USERNAME**: Your JIRA username (email).
+   - **PASSWORD**: Your JIRA API token.
 
 
 3. **Run the Collection**:
