@@ -1,9 +1,12 @@
 name: Automated API tests using Postman CLI and Newman
 
-on: 
-  workflow_dispatch: {}  # For manual execution
+on:
+  push:  # Se ejecuta en cada push
+    branches:
+      - main
+  workflow_dispatch: {}  # Para ejecución manual
   schedule:
-    - cron: '0 0 * * 0'  # Executes every Sunday at midnight
+    - cron: '0 0 * * 0'  # Se ejecuta todos los domingos a medianoche
 
 jobs:
   automated-api-tests:
